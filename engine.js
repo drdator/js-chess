@@ -122,8 +122,6 @@ const movesForPiece = (state, piece) => {
   return moves;
 };
 
-const alivePieces = (state) => state.pieces.filter((p) => !p.dead);
-
 const getPid = (state, piece) => state.pieces.indexOf(piece);
 
 export const validMovesForColor = (state, color) => {
@@ -180,6 +178,8 @@ const cloneState = (state) => {
 }
 
 // ----
+
+export const alivePieces = (state) => state.pieces.filter((p) => !p.dead);
 
 export const coordsForIndex = (index) => {
   const y = Math.floor(index / 8);
