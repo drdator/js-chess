@@ -9,11 +9,15 @@ const VALUE_MAP = {
   k: 10
 };
 
-const getRandom = (pieces) => {
+const getRandomMove = (pieces) => {
   const p = pieces[Math.floor(Math.random() * pieces.length)];
-  const m = p.moves[Math.floor(Math.random() * p.moves.length)];;
-  return {pid: p.pid, toIndex: m};
-}
+  const m = p.moves[Math.floor(Math.random() * p.moves.length)];
+  return { pid: p.pid, toIndex: m };
+};
+
+const findMostValuableAttacker = (attacks) => {
+  return attacks.reduce((a, b) => (a.score > b.score ? a : b));
+};
 
 export default (color) => {
   const makeMove = async (gameState) => {
@@ -28,10 +32,10 @@ export default (color) => {
       }
     }
     if (attacks.length) {
-      const best = attacks.sort((a, b) => a.score - b.score).pop();
+      const best = findMostValuableAttacker(attacks);
       return best.m;
     }
-    return getRandom(pieces);
+    return getRandomMove(pieces);
   };
 
   const promote = async (pid, gameState) => {
